@@ -12,22 +12,52 @@ is designed to be consistent, and readily distinguishable from names allocated b
 For further details on the naming convention used, and the rationale behind it, please refer to our [poster](https://wordpress.vdjbase.org/index.php/ogrdb_news/germline-set-creation-and-naming/).
 
 We encourage authors of tools and those building analysis pipelines to use the metadata provided in the germline set, rather than parsing the allele name to find the allele number, gene number and so on. This is simpler
-programatically, and also allows for the possibility that some information is not available, for reasons outlined in the poster referenced above.
-To support this, we provide here a command-line tool, add_germline_annotations, which will add commonly-used metadata to a rearrangement file. The tool is intended to be used with AIRR standard rearrangement files, 
-but is sufficientky flexible to work with most rearrangement schemas in CSV or TSV format.
+programatically, and also allows for the possibility that some information is not available, for reasons outlined in the poster referenced above. Likewise we encourage
+authors of tools to avoid assumptions about the format of a name, and in particular to accept the temporary label format.
 
-Because some existing tools may have difficulty working with allele names that do not include a subgroup number and/or allele number, we also provide tools that will convert allele names into a format
+Because some existing tools may have difficulty working with allele names that do not include a subgroup number and/or allele number, we provide here tools that will convert allele names into a format
 that should be acceptable to such tools by inserting dummy values. We hope that these will be less needed over time. The tools can also remove dummy values. We strongly encourage their removal before 
 publication, so that the published names are always consistent and follow the temporary label format.
+
+Two tools are provided. `add_germline_annotations` is intended to operate on the output of a sequence annotation tool,
+but is sufficiently flexible to operate on most csv or tsv files that have columns containing
+allele names. It will convert such names in nominated columns between label format and the
+'dummy' format containing subgroup and allele. `convert_fasta_labels` will perform the
+same operations on sequence names in a FASTA file. Further details are provided below.
 
 # Installation
 
 ```bash
 pip install receptor-germline-tools
 ```
-
 The module requires [Biopython](https://biopython.org).
 
 
 ### add_germline_annotations
 
+#### Usage:
+
+#### Description:
+
+The input file should be comma or tab-separated data, in which one or more columns contain allele
+names. MiAIRR tsv has been tested and its `v/d/j_call` column names are used by default. In the absence of the -u option, any allele names that match temporary labels that
+are listed in the germline set will be converted into a 'dummy IUIS format',
+including subgroup and allele number. These numbers are taken from the germline set metadata.
+If the metadata does not provide values, the 'dummy' values are used. If the -u option is
+specified, the operation is reversed: any names that match the dummy label format are
+converted back to the 'pure' label format, without subgroup or allele.
+
+Cells in the columns to be processed may contain multiple allele names. In this case the names 
+should be separated by a comma.
+
+### convert_fasta_labels
+
+#### Usage:
+
+#### Description:
+
+The input file should be a FASTA file. In the absence of the -u option, any sequence names that match temporary labels that
+are listed in the germline set will be converted into a 'dummy IUIS format', including subgroup and allele number. These numbers are taken from the germline set metadata.
+If the metadata does not provide values, the 'dummy' values are used. If the -u option is
+specified, the operation is reversed: any names that match the dummy label format are
+converted back to the 'pure' label format, without subgroup or allele.
