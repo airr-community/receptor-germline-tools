@@ -1,0 +1,4 @@
+add_germline_annotations rearrangement.tsv rearrangement_output.tsv germline_set.json
+add_germline_annotations rearrangement_output.tsv rearrangement_undummified.tsv germline_set.json -u -c v_call_dummy,d_call_dummy,j_call_dummy
+convert_fasta_labels labelled_fasta.fasta dummified_fasta.fasta fasta_germline_set.json
+convert_fasta_labels dummified_fasta.fasta undummified_fasta.fasta fasta_germline_set.json -u

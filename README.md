@@ -19,23 +19,47 @@ Because some existing tools may have difficulty working with allele names that d
 that should be acceptable to such tools by inserting dummy values. We hope that these will be less needed over time. The tools can also remove dummy values. We strongly encourage their removal before 
 publication, so that the published names are always consistent and follow the temporary label format.
 
-Two tools are provided. `add_germline_annotations` is intended to operate on the output of a sequence annotation tool,
+Two command-line tools are provided. `add_germline_annotations` is intended to operate on the output of a sequence annotation tool,
 but is sufficiently flexible to operate on most csv or tsv files that have columns containing
 allele names. It will convert such names in nominated columns between label format and the
 'dummy' format containing subgroup and allele. `convert_fasta_labels` will perform the
 same operations on sequence names in a FASTA file. Further details are provided below.
 
+By default, the dummy values used by the tools are 0 for the subgroup, and 00 for the allele. These values can be changed if
+necessary. If you do need to change the values, please use values that are not used by any existing allele in the
+reference set, so that the dummy values can be distinguished.
+
 # Installation
+Python v3.9 or greater is required.
 
 ```bash
+pip install biopython   # if not already installed
 pip install receptor-germline-tools
 ```
-The module requires [Biopython](https://biopython.org).
 
 
 ### add_germline_annotations
 
-#### Usage:
+```commandline
+usage: add_germline_annotations [-h] [-c CALL_COLUMNS] [-s DUMMY_SUBGROUP] [-a DUMMY_ALLELE] [-u] input_file output_file germline_set
+
+Convert IgLabel-style labels in an alignment file to dummy IUIS format
+
+positional arguments:
+  input_file            alignments to annotate (csv, tsv)
+  output_file           output with added annotations
+  germline_set          AIRR standard germline set to use for metadata (JSON)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CALL_COLUMNS, --call_columns CALL_COLUMNS
+                        Names of one or more columns to be processed, separated by commas
+  -s DUMMY_SUBGROUP, --dummy_subgroup DUMMY_SUBGROUP
+                        The subgroup to be used, where no value is specified in the germline set metadata
+  -a DUMMY_ALLELE, --dummy_allele DUMMY_ALLELE
+                        The allele to be used, where no value is specified in the germline set metadata
+  -u, --un_dummy        translate dummy names back to label form
+```
 
 #### Description:
 
@@ -43,7 +67,7 @@ The input file should be comma or tab-separated data, in which one or more colum
 names. MiAIRR tsv has been tested and its `v/d/j_call` column names are used by default. In the absence of the -u option, any allele names that match temporary labels that
 are listed in the germline set will be converted into a 'dummy IUIS format',
 including subgroup and allele number. These numbers are taken from the germline set metadata.
-If the metadata does not provide values, the 'dummy' values are used. If the -u option is
+If the metadata does not provide values, the 'dummy' values are used: by default these are 0 for subgroup, and 00 for allele. If the -u option is
 specified, the operation is reversed: any names that match the dummy label format are
 converted back to the 'pure' label format, without subgroup or allele.
 
@@ -52,12 +76,29 @@ should be separated by a comma.
 
 ### convert_fasta_labels
 
-#### Usage:
+```commandline
+usage: convert_fasta_labels [-h] [-s DUMMY_SUBGROUP] [-a DUMMY_ALLELE] [-u] input_file output_file germline_set
+
+Convert IgLabel-style labels in a FASTA file to dummy IUIS format
+
+positional arguments:
+  input_file            records to convert (FASTA)
+  output_file           converted output (FASTA)
+  germline_set          AIRR standard germline set to use for metadata (JSON)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s DUMMY_SUBGROUP, --dummy_subgroup DUMMY_SUBGROUP
+                        subgroup to use when no subgroup has been defined
+  -a DUMMY_ALLELE, --dummy_allele DUMMY_ALLELE
+                        allele to use when no allele has been defined
+  -u, --un_dummy        translate dummy names back to label form
+```
 
 #### Description:
 
 The input file should be a FASTA file. In the absence of the -u option, any sequence names that match temporary labels that
 are listed in the germline set will be converted into a 'dummy IUIS format', including subgroup and allele number. These numbers are taken from the germline set metadata.
-If the metadata does not provide values, the 'dummy' values are used. If the -u option is
+If the metadata does not provide values, the 'dummy' values are used: by default these are 0 for subgroup, and 00 for allele. If the -u option is
 specified, the operation is reversed: any names that match the dummy label format are
 converted back to the 'pure' label format, without subgroup or allele.

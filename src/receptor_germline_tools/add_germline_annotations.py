@@ -11,7 +11,7 @@ import csv
 import argparse
 import os
 import csv
-from germline_utils import *
+from receptor_germline_tools.germline_utils import *
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
     parser.add_argument('input_file', help='alignments to annotate (csv, tsv)')
     parser.add_argument('output_file', help='output with added annotations')
     parser.add_argument('germline_set', help='AIRR standard germline set to use for metadata (JSON)')
-    parser.add_argument('-c', '--call_columns', help='Names of one or more columns to be processed, separated by commas', default='v_call,d_call,J_call')
+    parser.add_argument('-c', '--call_columns', help='Names of one or more columns to be processed, separated by commas', default='v_call,d_call,j_call')
     parser.add_argument('-s', '--dummy_subgroup', help='The subgroup to be used, where no value is specified in the germline set metadata', default='0')
     parser.add_argument('-a', '--dummy_allele', help='The allele to be used, where no value is specified in the germline set metadata', default='00')
     parser.add_argument('-u', '--un_dummy', help='translate dummy names back to label form', action="store_true")
@@ -70,10 +70,10 @@ def main():
 
                     if args.un_dummy:
                         row[call + '_undummy'] = ','.join([name for name in names])
-                        print(f"{row[call]} -> {row[call + '_undummy']}")
+                        # print(f"{row[call]} -> {row[call + '_undummy']}")
                     else:
                         row[call + '_dummy'] = ','.join([name for name in names])
-                        print(f"{row[call]} -> {row[call + '_dummy']}")
+                        # print(f"{row[call]} -> {row[call + '_dummy']}")
 
             writer.writerow(row)
 

@@ -27,10 +27,7 @@ def dummify(name, germline_data, dummy_subgroup, dummy_allele):
         return name
 
     if name in germline_data:
-        if germline_data[name].subgroup:
-            dummy_name = name[:4] + germline_data[name].subgroup + '-' + name[5:]
-        else:
-            dummy_name = name[:4] + germline_data[name].subgroup + name[5:]
+        dummy_name = name[:4] + germline_data[name].subgroup + '-' + name[5:]
 
         if '*' not in name:
             dummy_name += '*' + dummy_allele
@@ -46,17 +43,13 @@ def undummify(name, dummy_allele):
     if '*' not in name:
         return name
 
-    if name[3] == 'J' and '-' not in name:
-        gene_number = name.split('*')[0]
-        gene_number = gene_number[4:]
-    else:
-        if '-' not in name:
-            return name
+    if '-' not in name:
+        return name
 
-        gene_number = name.split('*')[0]
-        gene_number = gene_number[name.index('-') + 1:]
+    gene_number = name.split('*')[0]
+    gene_number = gene_number[name.index('-') + 1:]
 
-    if len(gene_number) != 4:
+    if len(gene_number) != 4 or '-' in gene_number:
         return name
 
     label_form = name[:4] + '-' + gene_number
@@ -102,10 +95,7 @@ def read_germline_data(args):
         germline_set = json.load(fi)
 
     for allele_description in germline_set['GermlineSet']['allele_descriptions']:
-        if allele_description['sequence_type'] != 'J':
-            subgroup = allele_description['subgroup_designation'] if (allele_description['subgroup_designation']) else args.dummy_subgroup
-        else:
-            subgroup = ''
+        subgroup = allele_description['subgroup_designation'] if (allele_description['subgroup_designation']) else args.dummy_subgroup
         allele = allele_description['allele_designation'] if allele_description['allele_designation'] else args.dummy_allele
         germline_data[allele_description['label']] = AlleleData(allele_description['label'], subgroup, allele)
 

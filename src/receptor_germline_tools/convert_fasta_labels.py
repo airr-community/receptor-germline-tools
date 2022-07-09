@@ -13,7 +13,7 @@ import os
 import json
 from collections import namedtuple
 import csv
-from germline_utils import *
+from receptor_germline_tools.germline_utils import *
 
 
 def main():
@@ -21,8 +21,8 @@ def main():
     parser.add_argument('input_file', help='records to convert (FASTA)')
     parser.add_argument('output_file', help='converted output (FASTA)')
     parser.add_argument('germline_set', help='AIRR standard germline set to use for metadata (JSON)')
-    parser.add_argument('-s', '--dummy_subgroup', default='0')
-    parser.add_argument('-a', '--dummy_allele', default='00')
+    parser.add_argument('-s', '--dummy_subgroup', help='subgroup to use when no subgroup has been defined', default='0')
+    parser.add_argument('-a', '--dummy_allele', help='allele to use when no allele has been defined', default='00')
     parser.add_argument('-u', '--un_dummy', help='translate dummy names back to label form', action="store_true")
 
     args = parser.parse_args()
