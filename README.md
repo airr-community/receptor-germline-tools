@@ -53,20 +53,22 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -c CALL_COLUMNS, --call_columns CALL_COLUMNS
-                        Names of one or more columns to be processed, separated by commas
+                        Names of one or more columns to be processed, separated by commas (default: v_call,d_call,j_call)
   -s DUMMY_SUBGROUP, --dummy_subgroup DUMMY_SUBGROUP
-                        The subgroup to be used, where no value is specified in the germline set metadata
+                        The subgroup to be used, where no value is specified in the germline set metadata (default: 0)
   -a DUMMY_ALLELE, --dummy_allele DUMMY_ALLELE
-                        The allele to be used, where no value is specified in the germline set metadata
+                        The allele to be used, where no value is specified in the germline set metadata (default: 00)
   -u, --un_dummy        translate dummy names back to label form
 ```
 
 #### Description:
 
 The input file should be comma or tab-separated data, in which one or more columns contain allele
-names. MiAIRR tsv has been tested and its `v/d/j_call` column names are used by default. In the absence of the -u option, any allele names that match temporary labels that
+names. The format of the file is determined automatically from its content.
+MiAIRR column names are used by default. In the absence of the -u option, any allele names that match temporary labels that
 are listed in the germline set will be converted into a 'dummy IUIS format',
-including subgroup and allele number. These numbers are taken from the germline set metadata.
+including subgroup and allele number. These numbers are taken from the germline set metadata. Names that do not match the temporary
+label format will be left as-is. Translated names (and those left unchanged) are put in a new column with the suffix '_dummy'.
 If the metadata does not provide values, the 'dummy' values are used: by default these are 0 for subgroup, and 00 for allele. If the -u option is
 specified, the operation is reversed: any names that match the dummy label format are
 converted back to the 'pure' label format, without subgroup or allele.
@@ -89,9 +91,9 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -s DUMMY_SUBGROUP, --dummy_subgroup DUMMY_SUBGROUP
-                        subgroup to use when no subgroup has been defined
+                        subgroup to use when no subgroup has been defined (default: 0)
   -a DUMMY_ALLELE, --dummy_allele DUMMY_ALLELE
-                        allele to use when no allele has been defined
+                        allele to use when no allele has been defined (default: 00)
   -u, --un_dummy        translate dummy names back to label form
 ```
 
