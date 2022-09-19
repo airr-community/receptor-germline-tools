@@ -9,8 +9,6 @@ is designed to be consistent, and readily distinguishable from names allocated b
 - Where two or more alleles of the same gene have been identified, the temporary label will include an allele number, for example IGHV-H7DF&ast;01, IGHV-H7DF&ast;02.
 - A subgroup (family) number is never included in the temporary label.
 
-For further details on the naming convention used, and the rationale behind it, please refer to our [poster](https://wordpress.vdjbase.org/index.php/ogrdb_news/germline-set-creation-and-naming/).
-
 We encourage authors of tools and those building analysis pipelines to use the metadata provided in the germline set, rather than parsing the allele name to find the allele number, gene number and so on. This is simpler
 programatically, and also allows for the possibility that some information is not available, for reasons outlined in the poster referenced above. Likewise we encourage
 authors of tools to avoid assumptions about the format of a name, and in particular to accept the temporary label format.
