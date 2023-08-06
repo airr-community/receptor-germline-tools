@@ -6,6 +6,30 @@ from Bio.SeqRecord import SeqRecord
 import json
 
 
+permitted_header_fields = [
+    'release_version',  # Release version of the allele
+    'allele_description_ref',  # Unique reference to the allele description, in standardized form (Repo:Label:Version)
+    'aliases', # Alternative names for this sequence
+    'locus', # Gene Locus (e.g. IGH)
+    'chromosome', # Chromosome (e.g. 14)
+    'sequence_type', # Sequence type (e.g. V)
+    'functional', # Functional (T/F)
+    'species', # Binomial designation of subject's species
+    'species_subgroup', # Race, strain or other species subgroup to which this subject belongs
+    'species_subgroup_type', # Type of species subgroup (e.g. strain)
+    'subgroup_designation', # Identifier of the gene subgroup or clade, as (and if) defined
+    'gene_designation', # Gene number or other identifier, as (and if) defined
+    'allele_designation', # Allele number or other identifier, as (and if) defined
+    'allele_similarity_cluster_designation', # ID of the similarity cluster used in this germline set, if designated
+    'allele_similarity_cluster_member_id', # ID of the similarity cluster member used in this germline set, if designated
+    'paralogs', # Labels of paralogs, if any
+    'curational_tags', # Tags used to indicate curational status
+    'gs_release_version', # Release version of the germline set
+    'gs_germline_set_name', # Name of the germline set
+    'gs_germline_set_ref', # Unique reference to the germline set, in standardized form (Repo:Label:Version)
+]
+
+
 AlleleData = namedtuple('AlleleData', 'name subgroup allele')
 
 # is the name in IgLabel format?
@@ -27,13 +51,18 @@ def dummify(name, germline_data, dummy_subgroup, dummy_allele):
         return name
 
     if name in germline_data:
-        dummy_name = name[:4] + germline_data[name].subgroup + '-' + name[5:]
+        if germline_data[name].subgroup:
+            dummy_name = name[:4] + germline_data[name].subgroup + '-' + name[5:]
+        else:
+            dummy_name = name[:4] + dummy_subgroup + '-' + name[5:]
 
         if '*' not in name:
             dummy_name += '*' + dummy_allele
-
     else:
-        dummy_name = name
+        dummy_name = name[:4] + dummy_subgroup + '-' + name[5:]
+
+        if '*' not in name:
+            dummy_name += '*' + dummy_allele
 
     return dummy_name
 
@@ -83,7 +112,8 @@ def toSeqRecords(seqs):
 
 
 # write fasta from dict
-def write_fasta(seqs, outfile):
+def write_fasta(outfile, seqs):
+    seqs = {k: v for k, v in sorted(seqs.items(), key=lambda item: item[0])}
     SeqIO.write(toSeqRecords(seqs), outfile, 'fasta')
 
 

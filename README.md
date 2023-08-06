@@ -86,10 +86,11 @@ Convert IgLabel-style labels in a FASTA file to dummy IUIS format
 positional arguments:
   input_file            records to convert (FASTA)
   output_file           converted output (FASTA)
-  germline_set          AIRR standard germline set to use for metadata (JSON)
 
 optional arguments:
   -h, --help            show this help message and exit
+  -g GERMLINE_SET, --germline_set GERMLINE_SET 
+                        AIRR standard germline set to use for metadata (JSON)
   -s DUMMY_SUBGROUP, --dummy_subgroup DUMMY_SUBGROUP
                         subgroup to use when no subgroup has been defined (default: 0)
   -a DUMMY_ALLELE, --dummy_allele DUMMY_ALLELE

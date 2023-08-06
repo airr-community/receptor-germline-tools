@@ -1,0 +1,10 @@
+rearrangement_id	rearrangement_set_id	sequence_id		v_call	d_call	j_call	gs_release_version	v_release_version	v_functional	v_gene_designation	v_aliases	v_paralogs	d_release_version	d_functional	d_gene_designation	d_aliases	d_paralogs	j_release_version	j_functional	j_gene_designation	j_aliases	j_paralogs
+IVKNQEJ01BVGQ6	1	IVKNQEJ01BVGQ6		IGHV1-2*06	IGHD2-8*01	IGHJ5*02	3	4	True	1	IGHV1-2*i01		1	True	2			1	True	5		
+IVKNQEJ01AQVWS	1	IVKNQEJ01AQVWS		IGHV1-2*07	IGHD4-4*01,IGHD2-8*01	IGHJ5*02	3	1	True	1			1;1	True;True	4;2	;	IGHD4-11*01;	1	True	5		
+IVKNQEJ01AOYFZ	1	IVKNQEJ01AOYFZ		IGHV1-2*06	IGHD2-8*01	IGHJ6*03	3	4	True	1	IGHV1-2*i01		1	True	2			1	True	6		
+IVKNQEJ01EI5S4	1	IVKNQEJ01EI5S4		IGHV1-69*01	IGHD4-4*01	IGHJ5*02	3	1	True	1		IGHV1-69D*01	1	True	4		IGHD4-11*01	1	True	5		
+IVKNQEJ01DGRRI	1	IVKNQEJ01DGRRI		IGHV1-2*06	IGHD2-8*01	IGHJ6*03	3	4	True	1	IGHV1-2*i01		1	True	2			1	True	6		
+IVKNQEJ01APN5N	1	IVKNQEJ01APN5N		IGHV1-69*01	IGHD2-8*01,	IGHJ6*03	3	1	True	1		IGHV1-69D*01	1	True	2			1	True	6		
+IVKNQEJ01B0TT2	1	IVKNQEJ01B0TT2		IGHV1-2*06	IGHD5-5*01	IGHJ5*02	3	4	True	1	IGHV1-2*i01		1	True	5		IGHD5-18*01,xyz,abc	1	True	5		
+IVKNQEJ01AIS74	1	IVKNQEJ01AIS74		IGHV1-69*01,IGHV1-2*06	IGHD2-8*01,IGHD5-5*01	IGHJ5*02	3	1;4	True;True	1;1	;IGHV1-2*i01	IGHV1-69D*01;	1;1	True;True	2;5	;	;IGHD5-18*01,xyz,abc	1	True	5		
+IVKNQEJ01AJ44V	1	IVKNQEJ01AJ44V		IGHV1-454*06	IGHD5-5*01	IGHJ6*03, IGHJ5*02	3						1	True	5		IGHD5-18*01,xyz,abc	1;1	True;True	6;5	;	;
