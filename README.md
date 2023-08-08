@@ -1,6 +1,6 @@
 # Tools for working with AIRR standard germline sets
 
-Tools for working with AIRR-C JSON-formatting germline sets. Please see the [documentation](https://williamdlees.github.io/receptor-germline-tools/_build/html/introduction.html)
+Tools for working with AIRR-C JSON-formatting germline sets. Please see the [documentation](https://airr-community.github.io/receptor-germline-tools/_build/html/introduction.html)
 for further details.
 
 Changes in version 0.0.4:
