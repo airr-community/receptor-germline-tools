@@ -11,10 +11,16 @@ import csv
 import argparse
 import os
 import csv
-from receptor_germline_tools.germline_utils import *
+
+try:
+    from receptor_germline_tools.germline_utils import *
+except:
+    from germline_utils import *
 
 
-def main():
+
+
+def get_parser():
     parser = argparse.ArgumentParser(description='Convert IgLabel-style labels in an alignment file to dummy IUIS format')
     parser.add_argument('input_file', help='alignments to annotate (csv, tsv)')
     parser.add_argument('output_file', help='output with added annotations')
@@ -23,8 +29,11 @@ def main():
     parser.add_argument('-s', '--dummy_subgroup', help='The subgroup to be used, where no value is specified in the germline set metadata', default='0')
     parser.add_argument('-a', '--dummy_allele', help='The allele to be used, where no value is specified in the germline set metadata', default='00')
     parser.add_argument('-u', '--un_dummy', help='translate dummy names back to label form', action="store_true")
+    return parser
 
-    args = parser.parse_args()
+
+def main():
+    args = get_parser().parse_args()
     call_columns = args.call_columns.split(',')
 
     missing_files = False

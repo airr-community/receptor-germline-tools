@@ -16,15 +16,18 @@ except:
     from germline_utils import permitted_header_fields
 
 
-def main():
+def get_parser():
     parser = argparse.ArgumentParser(description='Convert IgLabel-style labels in a FASTA file to dummy IUIS format')
     parser.add_argument('input_file', help='Annotation file in TSV format')
     parser.add_argument('germline_set', help='Germline set in AIRR-C format')
     parser.add_argument('output_file', help='Extended annotation file in TSV format')
     parser.add_argument('-f', '--fields', help='add comma-separated fields to headers, e.g. release_version,aliases')
     parser.add_argument('-d', '--distinct', help='where there are multiple calls, provide distinct values for each call, semicolon separated', action="store_true", default=False)
+    return parser
 
-    args = parser.parse_args()
+
+def main():
+    args = get_parser().parse_args()
     required_header_fields = []
     if args.fields:
         required_header_fields = args.fields.split(',')
@@ -88,21 +91,27 @@ def make_annot_lookup(germline_set, required_header_fields):
     annot_lookup = {}
 
     for allele_description in germline_set['allele_descriptions']:
-        label = allele_description['label'] if 'label' in allele_description else allele_description['id'] if 'id' in allele_description else None
+        allele_name = allele_description['label'] if 'label' in allele_description else allele_description['id'] if 'id' in allele_description else None
 
-        if not label:
+        if not allele_name:
             continue
         
-        annot_lookup[label] = {}
+        if '*' not in allele_name:
+            allele_name += f"*{allele_description['allele_designation']}" if 'allele_designation' in allele_description and allele_description['allele_designation'] else '*00'
+        if allele_name[4] == '-':
+            subgroup_designation = allele_description['subgroup_designation'] if 'subgroup_designation' in allele_description and allele_description['subgroup_designation'] else '0'
+            allele_name = allele_name.replace('-', f'{subgroup_designation}-')
+
+        annot_lookup[allele_name] = {}
 
         for field in required_header_fields:
             if not field.startswith('gs_'):
                 if field in allele_description:
                     try:
-                        annot_lookup[label][field] = ','.join([x for x in allele_description[field] if x])
+                        annot_lookup[allele_name][field] = ','.join([x for x in allele_description[field] if x])
                        
                     except:
-                        annot_lookup[label][field] = str(allele_description[field]) if allele_description[field] else ''
+                        annot_lookup[allele_name][field] = str(allele_description[field]) if allele_description[field] else ''
 
     return annot_lookup
 

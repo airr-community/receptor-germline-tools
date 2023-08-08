@@ -13,10 +13,14 @@ import os
 import json
 from collections import namedtuple
 import csv
-from receptor_germline_tools.germline_utils import *
+
+try:
+    from receptor_germline_tools.germline_utils import *
+except:
+    from germline_utils import *
 
 
-def main():
+def get_parser():
     parser = argparse.ArgumentParser(description='Convert IgLabel-style labels in a FASTA file to dummy IUIS format')
     parser.add_argument('input_file', help='records to convert (FASTA)')
     parser.add_argument('output_file', help='converted output (FASTA)')
@@ -24,8 +28,11 @@ def main():
     parser.add_argument('-s', '--dummy_subgroup', help='subgroup to use when no subgroup has been defined', default='0')
     parser.add_argument('-a', '--dummy_allele', help='allele to use when no allele has been defined', default='00')
     parser.add_argument('-u', '--un_dummy', help='translate dummy names back to label form', action="store_true", default=False)
+    return parser
 
-    args = parser.parse_args()
+
+def main():
+    args = get_parser().parse_args()
 
     if not os.path.isfile(args.input_file):
         print(f'{args.input_file} does not exist.')

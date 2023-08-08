@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "create_fasta human",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/receptor_germline_tools/create_fasta.py",
+            "args": ["Human_IGH_VDJ_rev_3_ex.json", "Human_IGH_VDJ_rev_3_ex.fasta", "-n", "-f", "gs_release_version,release_version,aliases,paralogs"],
+            "cwd": "${workspaceFolder}/tests",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "create_fasta mouse",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/receptor_germline_tools/create_fasta.py",
+            "args": ["Mouse_129S1_SvlmJ IGLV_rev_2.json", "Mouse_129S1_SvlmJ IGLV_rev_2.fasta", "-n", "-f", "gs_release_version,release_version,aliases,paralogs"],
+            "cwd": "${workspaceFolder}/tests",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "annotate_rearrangements",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/receptor_germline_tools/annotate_rearrangements.py",
+            "args": ["rearrangements.tsv", "Human_IGH_VDJ_rev_3_ex.json", "rearrangements_out.tsv", "-d", "-f", "gs_release_version,release_version,functional,gene_designation,aliases,paralogs"],
+            "cwd": "${workspaceFolder}/tests",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
