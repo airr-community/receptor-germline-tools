@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; receptor_germline_tools  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Fields that can be included with the -f option" href="list_of_fields.html" />
+    <link rel="prev" title="Receptor-utils: code and utilities for working with IG/TR receptor sequences" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> receptor_germline_tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-rich-information-in-airr-c-germline-sets">Using the rich information in AIRR-C germline sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-iglabel-style-sequence-names">Working with IGLabel-style sequence names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="list_of_fields.html">Fields that can be included with the <code class="docutils literal notranslate"><span class="pre">-f</span></code> option</a></li>
+<li class="toctree-l1"><a class="reference internal" href="working_with_labels.html">Working with IgLAbel-style labels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_fasta.html">create_fasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add_germline_annotations.html">add_germline_annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annotate_rearrangements.html">add_germline_annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convert_fasta_labels.html">convert_fasta_labels</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">receptor_germline_tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
+<p>This package contains utilities which may be useful in working with AIRR-C JSON germline sets</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<p>The package requires python, and can be installed using pip:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">receptor-germline-tools</span></code></p>
+<p>It requires <a class="reference external" href="https://biopython.org/">Biopython</a>, which may need to be installed separately.</p>
+</section>
+<section id="using-the-rich-information-in-airr-c-germline-sets">
+<h2>Using the rich information in AIRR-C germline sets<a class="headerlink" href="#using-the-rich-information-in-airr-c-germline-sets" title="Permalink to this heading"></a></h2>
+<p>Quick summary:</p>
+<p>Given an AIRR-C germline set <code class="docutils literal notranslate"><span class="pre">germlines.json</span></code>, create a FASTA-formatted IMGT-gapped set, in which the header lists paralogs (other items
+in the set with the same sequence) and aliases (other names by which this item has been known):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">create_fasta</span> <span class="o">-</span><span class="n">i</span> <span class="n">germlines</span><span class="o">.</span><span class="n">json</span> <span class="o">-</span><span class="n">o</span> <span class="n">germlines</span><span class="o">.</span><span class="n">fasta</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">f</span> <span class="n">paralogs</span><span class="p">,</span><span class="n">aliases</span>
+</pre></div>
+</div>
+<p>Given an AIRR-C rearrangements file or Changeo file <code class="docutils literal notranslate"><span class="pre">rearrangements.tsv</span></code>, create a copy that also includes columns for subgroup number,
+gene number and allele number of each V,D and J allele, using information from the germline set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">add_germline_annotations</span> <span class="n">rearrangements</span><span class="o">.</span><span class="n">tsv</span> <span class="n">germlines</span><span class="o">.</span><span class="n">json</span> \
+  <span class="n">rearrangements_annotated</span><span class="o">.</span><span class="n">tsv</span> \
+  <span class="o">-</span><span class="n">f</span> <span class="n">subgroup_designation</span><span class="p">,</span><span class="n">gene_designation</span><span class="p">,</span><span class="n">allele_designation</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="list_of_fields.html#list-of-fields"><span class="std std-ref">Fields that can be included with the -f option</span></a></p>
+<p>More detail:</p>
+<p><a class="reference internal" href="create_fasta.html#create-fasta"><span class="std std-ref">create_fasta</span></a> - Create a gapped or ungapped FASTA file from an AIRR-C JSON-format germline set, optionally containing additional information in the header</p>
+<p><a class="reference internal" href="annotate_rearrangements.html#annotate-rearrangements"><span class="std std-ref">add_germline_annotations</span></a> - Annotate an AIRR-C rearrangements file with additional germline information from a AIRR-C JSON-format germline set</p>
+</section>
+<section id="working-with-iglabel-style-sequence-names">
+<h2>Working with IGLabel-style sequence names<a class="headerlink" href="#working-with-iglabel-style-sequence-names" title="Permalink to this heading"></a></h2>
+<p>Alleles in the mouse germline sets are allocated four-letter  <a class="reference external" href="https://github.com/williamdlees/IgLabel">IgLabel-style</a> labels with ‘dummy’ subgroup and allele designations.
+These can be used as-is with many tools.</p>
+<p><a class="reference internal" href="working_with_labels.html#working-with-labels"><span class="std std-ref">Further information</span></a></p>
+<p><a class="reference internal" href="add_germline_annotations.html#add-germline-annotations"><span class="std std-ref">add_germline_annotations</span></a> - Convert IgLabel-style labels in an alignment file to dummy IUIS format</p>
+<p><a class="reference internal" href="convert_fasta_labels.html#convert-fasta-labels"><span class="std std-ref">convert_fasta_labels</span></a> - Create a custom auxiliary data file for IgBlast</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Receptor-utils: code and utilities for working with IG/TR receptor sequences" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="list_of_fields.html" class="btn btn-neutral float-right" title="Fields that can be included with the -f option" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, William Lees.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

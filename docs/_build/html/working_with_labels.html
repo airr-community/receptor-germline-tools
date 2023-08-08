@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Working with IgLAbel-style labels &mdash; receptor_germline_tools  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="create_fasta" href="create_fasta.html" />
+    <link rel="prev" title="Fields that can be included with the -f option" href="list_of_fields.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> receptor_germline_tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list_of_fields.html">Fields that can be included with the <code class="docutils literal notranslate"><span class="pre">-f</span></code> option</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Working with IgLAbel-style labels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_fasta.html">create_fasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add_germline_annotations.html">add_germline_annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annotate_rearrangements.html">add_germline_annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convert_fasta_labels.html">convert_fasta_labels</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">receptor_germline_tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Working with IgLAbel-style labels</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/working_with_labels.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="working-with-iglabel-style-labels">
+<span id="working-with-labels"></span><h1>Working with IgLAbel-style labels<a class="headerlink" href="#working-with-iglabel-style-labels" title="Permalink to this heading"></a></h1>
+<p>Germline sets published on <a class="reference external" href="https://ogrdb.airr-community.org/">OGRDB</a> may contain sequences which have not been allocated official names
+by <a class="reference external" href="https://iuis.org/committees/nom/immunoglobulins-ig-t-cell-receptors-tr-and-major-histocompatibility-mh-nomenclature-sub-committee/">IUIS</a>.
+These sequences will normally be allocated a four letter label, as outlined in <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2667119023000058">Lees et al., 2023</a>.
+In some cases, these sequences may not have been mapped to a specific gene. This can happen, for example, where the sequence
+has been discovered by inference from AIRR-seq repertoires. The mouse sets on OGRDB are a good example of this, as they are derived
+largely from AIRR-seq data. The human sets follow a more traditional naming scheme in order to remain as aligned as possible with the IUIS nomenclature.</p>
+<p>Because some existing tools have difficulty working with allele names that do not include a subgroup number and/or allele number, in FASTA sets provided by OGRDB,
+a dummy subgroup and/or allele number is provided so that the sequences can be processed. In the mouse sets, for example, names of the form IGKV0-2GER*00 are used,
+where the 0 and 00 represent the dummy values. In the AIRR-C JSON format, the label would be shown as IGKV-2GER, and the subgroup designation and allele designation
+would be null. Because the dummy values are not part of the name, and are provided only to allow processing by some tools, we strongly recommend that they are removed before publication,
+so that the published names are always consistent and follow the temporary label format.</p>
+<p>In case they may be useful, we provide two tools here which can convert between the dummy format and the temporary label format.</p>
+<p><a class="reference internal" href="add_germline_annotations.html#add-germline-annotations"><span class="std std-ref">add_germline_annotations</span></a> is intended to operate on the output of a sequence annotation tool, but is sufficiently flexible to operate on most csv or tsv files that have columns containing
+allele names. It will convert such names in nominated columns between label format and the ‘dummy’ format containing subgroup and allele.</p>
+<p><a class="reference internal" href="convert_fasta_labels.html#convert-fasta-labels"><span class="std std-ref">convert_fasta_labels</span></a> will perform the same operations on sequence names in a FASTA file.</p>
+<p>Both tools will operate on a file containing a mixture of dummy and real values, and will only convert the dummies, provided care is taken to pick
+values for dummies that are not otherwise used. The defaults of 0 and 00 are generally safe to use, as they are never used in IUIS_allocated names.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="list_of_fields.html" class="btn btn-neutral float-left" title="Fields that can be included with the -f option" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="create_fasta.html" class="btn btn-neutral float-right" title="create_fasta" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, William Lees.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
